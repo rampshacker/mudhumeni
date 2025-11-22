@@ -1340,7 +1340,7 @@ def page_dashboard():
         </div>
         """, unsafe_allow_html=True)
         
-        if st.button("➕ Add New Task", use_container_width=True):
+        if st.button("➕ Add New Task", width="stretch"):
             st.session_state.navigation = "Tasks"
             st.rerun()
         
@@ -1368,7 +1368,7 @@ def page_ai_chat():
             user_input = st.text_area("Ask your agriculture question:", height=100, 
                                        placeholder="E.g., What are the best crops to plant this season?",
                                        key="chat_input")
-            submitted = st.form_submit_button("📤 Send", use_container_width=True, type="primary")
+            submitted = st.form_submit_button("📤 Send", width="stretch", type="primary")
     
     with col2:
         if HAS_SPEECH:
