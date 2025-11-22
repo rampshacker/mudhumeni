@@ -15,26 +15,6 @@ from pathlib import Path
 from typing import List, Dict, Any, Optional
 import streamlit as st
 
-# Optional imports
-try:
-    from streamlit_option_menu import option_menu
-    HAS_OPTION_MENU = True
-except ImportError:
-    HAS_OPTION_MENU = False
-
-try:
-    import speech_recognition as sr
-    HAS_SPEECH = True
-except ImportError:
-    HAS_SPEECH = False
-    logger.info("ℹ️ Speech recognition not available. Install with: pip install SpeechRecognition PyAudio")
-
-try:
-    from streamlit_webrtc import webrtc_streamer
-    HAS_WEBRTC = True
-except ImportError:
-    HAS_WEBRTC = False
-
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
@@ -50,7 +30,7 @@ for directory in ["agri_data", "vector_db", "uploads", "logs", "database", "stat
                   "exports", "marketplace", "saved_tips", "crop_photos", "field_maps", "agri_data/resources"]:
     Path(directory).mkdir(exist_ok=True)
 
-# Setup logging
+# Setup logging BEFORE using logger
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -60,6 +40,27 @@ logging.basicConfig(
     ]
 )
 logger = logging.getLogger(__name__)
+
+# Optional imports - AFTER logger is defined
+try:
+    from streamlit_option_menu import option_menu
+    HAS_OPTION_MENU = True
+except ImportError:
+    HAS_OPTION_MENU = False
+
+try:
+    import speech_recognition as sr
+    HAS_SPEECH = True
+    logger.info("✅ Speech recognition available")
+except ImportError:
+    HAS_SPEECH = False
+    logger.info("ℹ️ Speech recognition not available (optional feature)")
+
+try:
+    from streamlit_webrtc import webrtc_streamer
+    HAS_WEBRTC = True
+except ImportError:
+    HAS_WEBRTC = False
 
 # ============================================================================
 # PAGE CONFIGURATION
